@@ -46,7 +46,6 @@ export default class App extends Component {
   }
 
   _renderScrollViewContent() {
-    const data = Array.from({length: 30});
     return (
       <View>
         {!this.state.isLoading && (
@@ -121,7 +120,6 @@ export default class App extends Component {
       outputRange: [0, 0, -8],
       extrapolate: 'clamp',
     });
-    const {name} = this.state;
     return (
       <View style={styles.fill}>
         <StatusBar
