@@ -3,7 +3,7 @@
  */
 
 import {AppRegistry} from 'react-native';
-import App from './src/components/zoom-animated';
+import App from './src/components/scroll';
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);

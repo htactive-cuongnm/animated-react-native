@@ -5,8 +5,10 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Image,
   View,
   RefreshControl,
+  ScrollView,
 } from 'react-native';
 
 const HEADER_MAX_HEIGHT = 300;
@@ -18,6 +20,8 @@ export default class App extends Component {
     super(props);
 
     this.state = {
+      name: [],
+      isLoading: false,
       scrollY: new Animated.Value(
         // iOS has negative initial scroll value because content inset...
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
@@ -26,22 +30,66 @@ export default class App extends Component {
     };
   }
 
+  async componentDidMount() {
+    this.setState({isLoading: true});
+    try {
+      const api = await fetch(
+        'http://www.json-generator.com/api/json/get/cqZievzIde?indent=2',
+      );
+      const data = await api.json();
+      this.setState({name: data}, () => {
+        this.setState({isLoading: false});
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   _renderScrollViewContent() {
     const data = Array.from({length: 30});
     return (
-      <View style={styles.scrollViewContent}>
-        {data.map((_, i) => (
-          <View key={i} style={styles.row}>
-            <Text>{i}</Text>
+      <View>
+        {!this.state.isLoading && (
+          <View style={styles.scrollViewContent}>
+            {this.state.name.map((items, i) => (
+              <View key={i} style={styles.row}>
+                <View
+                  style={{
+                    width: '30%',
+                  }}>
+                  <Image
+                    style={{width: '100%', height: 120}}
+                    source={{
+                      uri: items.picture,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    width: '70%',
+                  }}>
+                  <Text>ID: {items.index}</Text>
+                  <Text>favoriteFruit: {items.favoriteFruit}</Text>
+                  <Text>latitude: {items.latitude}</Text>
+                  <Text>company: {items.company}</Text>
+                  <Text>email: {items.email}</Text>
+                  <ScrollView
+                    horizontal={true}
+                    contentContainerStyle={{flexDirection: 'row'}}>
+                    {items.tags.map(r => (
+                      <Text style={{padding: 4, paddingLeft: 0}}>{r}</Text>
+                    ))}
+                  </ScrollView>
+                </View>
+              </View>
+            ))}
           </View>
-        ))}
+        )}
       </View>
     );
   }
 
   render() {
-    // Because of content inset the scroll value will be negative on iOS so bring
-    // it back to 0.
     const scrollY = Animated.add(
       this.state.scrollY,
       Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,
@@ -73,7 +121,7 @@ export default class App extends Component {
       outputRange: [0, 0, -8],
       extrapolate: 'clamp',
     });
-
+    const {name} = this.state;
     return (
       <View style={styles.fill}>
         <StatusBar
@@ -181,10 +229,8 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS !== 'ios' ? HEADER_MAX_HEIGHT : 0,
   },
   row: {
-    height: 40,
     margin: 16,
+    flexDirection: 'row',
     backgroundColor: '#D3D3D3',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
