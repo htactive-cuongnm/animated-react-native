@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Animated, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 
 export default class Fade extends Component {
   state = {
@@ -7,18 +14,17 @@ export default class Fade extends Component {
   };
 
   _start = () => {
-    Animated.timing(this.state.fadeValue, {
-      toValue: 1,
-      duration: 1000,
-    }).start();
+    this.setState({fadeValue: new Animated.Value(0)}, () => {
+      Animated.timing(this.state.fadeValue, {
+        toValue: 1,
+        duration: 1000,
+      }).start();
+    });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btn} onPress={() => this._start()}>
-          <Text style={styles.textBtn}>Start</Text>
-        </TouchableOpacity>
         <Animated.View
           style={{
             opacity: this.state.fadeValue,
@@ -26,11 +32,19 @@ export default class Fade extends Component {
             width: 200,
             margin: 5,
             borderRadius: 12,
-            backgroundColor: '#347a2a',
             justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#347a2a',
           }}>
-          <Text style={styles.text}>Fade </Text>
+          <Text>{Math.random()}</Text>
+          {/* <Image
+            style={[{width: '100%', height: 250}]}
+            source={require('../../assets/cat3.jpg')}
+          /> */}
         </Animated.View>
+        <TouchableOpacity style={styles.btn} onPress={() => this._start()}>
+          <Text style={styles.textBtn}>Find Radom</Text>
+        </TouchableOpacity>
       </View>
     );
   }
