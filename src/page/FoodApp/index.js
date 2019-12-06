@@ -272,7 +272,7 @@ export default class FoodApp extends Component {
                 alert('sda');
               },
             }}
-            centerComponent={{text: 'Home', style: {color: '#fff'}}}
+            centerComponent={{text: 'FOOD', style: {color: '#fff'}}}
             rightComponent={{icon: 'search', color: '#fff'}}
           />
           <ScrollableTabView

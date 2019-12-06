@@ -230,7 +230,7 @@ export class list extends Component {
         <Header
           containerStyle={{backgroundColor: '#ad1f1f'}}
           leftComponent={{icon: 'menu', color: '#fff'}}
-          centerComponent={{text: 'MY TITLE', style: {color: '#fff'}}}
+          centerComponent={{text: 'SEARCH', style: {color: '#fff'}}}
           rightComponent={{icon: 'search', color: '#fff'}}
         />
         <View

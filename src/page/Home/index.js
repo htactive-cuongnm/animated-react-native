@@ -286,7 +286,7 @@ export default class App extends Component {
                     alert('sda');
                   },
                 }}
-                centerComponent={{text: 'Home', style: {color: '#fff'}}}
+                centerComponent={{text: 'HOME', style: {color: '#fff'}}}
                 rightComponent={{icon: 'search', color: '#fff'}}
               />
             </View>
